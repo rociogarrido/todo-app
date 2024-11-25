@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,9 +29,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss',
 })
-export class TodoListComponent {
+export class TodoListComponent implements OnInit {
   newTask: string = '';
   tasks: { title: string; completed: boolean }[] = [];
+
+  ngOnInit() {
+    const savedTasks = localStorage.getItem('tasks');
+    if (savedTasks) {
+      this.tasks = JSON.parse(savedTasks);
+    }
+  }
 
   addTask() {
     if (this.newTask.trim().length < 3) {
@@ -40,6 +47,7 @@ export class TodoListComponent {
     }
     if (this.newTask.trim()) {
       this.tasks.push({ title: this.newTask, completed: false });
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
       this.newTask = '';
     }
   }
