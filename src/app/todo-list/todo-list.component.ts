@@ -34,9 +34,9 @@ export class TodoListComponent implements OnInit {
   tasks: { title: string; completed: boolean }[] = [];
 
   ngOnInit() {
-    const savedTasks = localStorage.getItem('tasks');
-    if (savedTasks) {
-      this.tasks = JSON.parse(savedTasks);
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks) {
+      this.tasks = JSON.parse(storedTasks);
     }
   }
 
@@ -47,12 +47,23 @@ export class TodoListComponent implements OnInit {
     }
     if (this.newTask.trim()) {
       this.tasks.push({ title: this.newTask, completed: false });
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
       this.newTask = '';
+      this.updateLocalStorage();
     }
   }
 
   removeTask(index: number) {
     this.tasks.splice(index, 1);
+    this.updateLocalStorage();
+  }
+
+  toggleCompletion(task: { title: string; completed: boolean }) {
+    task.completed = !task.completed;
+
+    this.updateLocalStorage();
+  }
+
+  updateLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 }

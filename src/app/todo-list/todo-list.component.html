@@ -17,7 +17,11 @@
 
 <mat-list>
   <mat-list-item *ngFor="let task of tasks; let i = index">
-    <mat-checkbox [(ngModel)]="task.completed">{{ task.title }}</mat-checkbox>
+    <mat-checkbox
+      [(ngModel)]="task.completed"
+      (change)="toggleCompletion(task)"
+      >{{ task.title }}</mat-checkbox
+    >
     <button mat-icon-button color="warn" (click)="removeTask(i)">🗑️</button>
   </mat-list-item>
 </mat-list>
