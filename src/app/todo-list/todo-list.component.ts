@@ -34,6 +34,10 @@ export class TodoListComponent {
   tasks: { title: string; completed: boolean }[] = [];
 
   addTask() {
+    if (this.newTask.trim().length < 3) {
+      alert('Please enter a task with at least 3 characters');
+      return;
+    }
     if (this.newTask.trim()) {
       this.tasks.push({ title: this.newTask, completed: false });
       this.newTask = '';
