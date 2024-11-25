@@ -1,1 +1,23 @@
-<p>todo-list works!</p>
+<mat-toolbar color="primary">To-Do App</mat-toolbar>
+
+<mat-card>
+  <mat-form-field appearance="fill">
+    <mat-label>New Task</mat-label>
+    <input matInput [(ngModel)]="newTask" (keyup.enter)="addTask()" />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="primary"
+    class="add-task-button"
+    (click)="addTask()"
+  >
+    Add Task
+  </button>
+</mat-card>
+
+<mat-list>
+  <mat-list-item *ngFor="let task of tasks; let i = index">
+    <mat-checkbox [(ngModel)]="task.completed">{{ task.title }}</mat-checkbox>
+    <button mat-icon-button color="warn" (click)="removeTask(i)">🗑️</button>
+  </mat-list-item>
+</mat-list>
